@@ -1,6 +1,6 @@
 
 # cNext Mobile Application
-<img src="resources/splash.v4.png" width="600px"/>
+<img src="resources/readme-icon.png" width="800px"/>
 
 cNext App is the mobile application developed in the context of the [CaravanNext](http://www.caravanext.eu) EU project. 
 ## About the App
