@@ -1,0 +1,62 @@
+<ion-view id="postViewer" class="post-view">
+  <ion-nav-title align-title="center">
+    <span>{{data.post.author.name}}</span>
+  </ion-nav-title>
+  <ion-content overflow-scroll="true" delegate-handle="postScroll">
+    <ion-refresher spinner="lines" on-refresh="doRefresh()"></ion-refresher>
+    <div class="navbar-fixed cnext-bar">
+      <div id="contextMenu" class="padding">
+        <p><span class="font-small" style="color:#fff;">{{data.post.created | amTimezone:angularMomentConfig.timezone | amTimeAgo}}</span></p>
+      </div>
+    </div>
+    <div>
+      <!--<div class="item-text-wrap padding-4" ng-bind-html="data.post.caption | embed:{fontSmiley:true, link:true,emoji:true,linkTarget:'_blank'}"></div>-->
+      <div class="post-excerpt padding" compile-html="PostsService.getHtmlCaption(data.post)" data-tap-disabled="true" open-external-url></div>
+      <div class="text-center" ng-if="data.post.type==='img'">
+        <img ng-if="data.post.type==='img'" ng-src="{{data.post.mediaUrl}}" zoom-src="{{data.post.mediaUrl}}" shrink-icon-class="ion-arrow-shrink" zoom-view width="100%"/>
+      </div>
+
+      <div class="text-center dark-bg padding-4" ng-if="data.post.type==='vid'">
+        <!--<iframe height="50%" class="video-screen" ng-src="{{getVideoSrc()}}" frameborder="0" allowfullscreen></iframe>-->
+        <video style="margin-left:auto; margin-right:auto; max-height:320px;" id="postVideoPlayer" class="post-video-player" ng-if="data.post.type==='vid'" controls="controls"></video>
+      </div>
+
+      <p class="padding-horizontal">
+        <span ng-click="PostsService.showLikesViewer(data.post,this)" class="note font-small float-left"
+              ng-if="data.post.numOfLikes>0">{{'LIKES' | translate:'{ numOfLikes: "'+data.post.numOfLikes +'" }' }}</span>
+        <span ng-if="data.post.type==='img'"  class="ion-arrow-expand float-right font-large" zoom-src="{{data.post.mediaUrl}}" zoom-view shrink-icon-class="ion-arrow-shrink"></span>
+      </p>
+      <div class="row row-center row-no-padding padding-4 stable-bg bordered-top-grey bordered-bottom-gray">
+        <div class="col col-50 padding-4 text-center">
+          <button class="button button-small"
+                  ng-class="{'ion-ios-heart':data.post.likeId,'ion-ios-heart-outline': !data.post.likeId}"
+                  ng-disabled="!user"
+                  ng-click="PostsService.likeUnlikePost(data.post,$event)"> {{'LIKE' | translate}}
+          </button>
+        </div>
+        <div class="col col-50  padding-4 text-center bordered-left-grey">
+          <button class="button button-small ion-social-facebook-outline" ng-click="PostsService.sharePost2FB(data.post)" > {{'SHARE' | translate}}</button>
+        </div>
+      </div>
+    </div>
+    <h4 class="item item-divider" ng-if="data.discussion.length>0">{{"DISCUSSION" | translate}}</h4>
+    <div class="bordered-bottom-stable" ng-repeat="comment in data.discussion | orderBy:'created':false" on-hold="manageComment(comment,$index)">
+      <div class="item padding-4 item-text-wrap" ng-class-even="'text-right item-avatar-left'" ng-class-odd="'text-left item-avatar-right'">
+        <!--<img user-img="" src="" issuer="{{comment.author.issuer}}" social-id="{{comment.author.socialId}}">-->
+        <img ng-src="{{imgUrl(comment.author.socialId,comment.author.issuer)}}">
+        <div class="item-text-wrap padding-4 stable-bg rounded light-border" ng-class-even="'comment-right'" ng-class-odd="'comment-left'">
+          <p ng-bind-html="comment.body"></p><br/>
+          <p class="item-text-wrap">[<span class="note">{{comment.author.name}},</span> <span class="note">{{comment.created | amTimezone:angularMomentConfig.timezone | amTimeAgo}}</span>]
+            <button ng-class-even="'float-left'" ng-class-odd="'float-right'"class="button-cnext button-thin button-icon ion-android-more-vertical margin-bottom-4 text-bold text-black font-large" ng-click="manageComment(comment,$index)"></button>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="margin-4">
+      <textarea id="newCommentTxtArea" rows="4" style="width:100%;border: 1px solid #989898;" class="margin-vertical-4 block highlighted stable-bg" ng-model="data.newCommentTxt" placeholder="{{'COMMENT_PROMPT' | translate}}"></textarea>
+      <button ng-if="!isUserLoggedIn" class="button button button-small button-cnext float-right" ng-click="showLogin(loginParams)">{{'LOGIN_TO_COMMENT' | translate}}</button>
+      <button ng-disabled="data.newCommentTxt==''" ng-if="isUserLoggedIn && hasUserAcceptedDisclaimer" class="button button-cnext button-small float-right" ng-click="doComment('none')">{{'COMMENT' | translate}}</button>
+      <button ng-if="isUserLoggedIn && !hasUserAcceptedDisclaimer" class="button button-small button-cnext float-right" ng-click="showDisclaimer(false)">{{'AGREE_TO_COMMENT' | translate}}</button>
+    </div>
+  </ion-content>
+</ion-view>

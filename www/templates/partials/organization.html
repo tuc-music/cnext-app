@@ -1,0 +1,8 @@
+<img ng-if="org.icon && org.icon!=''" ng-src="{{org.icon}}">
+<img ng-if="!org.icon || org.icon==''" src="img/no_img.png">
+<div class="bordered-left-dark padding">
+    <h2 class="wrapping-list">
+        <p class="section-title">{{org.title}}</p>
+    </h2>
+    <p class="wrapping-list">{{role}}</p>
+</div>

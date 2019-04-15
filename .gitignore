@@ -1,0 +1,12 @@
+www/lib/
+!www/lib/read-more
+node_modules/
+platforms/
+plugins/
+plugins/*.json
+.idea/
+res/
+resources/ios/
+resources/android/
+*.iml
+*.ipr

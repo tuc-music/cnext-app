@@ -1,0 +1,14 @@
+<ion-popover-view>
+  <ion-content>
+    <div class="list">
+      <div class="item"
+           ng-if="false == notification.processed"
+           ng-click="processNotification(notification.dateTimeSent)">
+        {{'ACCEPT' | translate}}
+      </div>
+      <div class="item" ng-click="deleteNotification(notification.dateTimeSent)">
+        {{'DELETE' | translate}}
+      </div>
+    </div>
+  </ion-content>
+</ion-popover-view>

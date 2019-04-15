@@ -1,0 +1,13 @@
+<ion-popover-view style="overflow-y: scroll; max-height: 350px!important;">
+  <ion-content>
+    <ion-list>
+      <ion-radio class="item-text-wrap"
+                 ng-repeat="game in games"
+                 ng-click="setActiveGame(game)"
+                 ng-model="currentGame"
+                 ng-value="game">
+        {{game.name}}
+      </ion-radio>
+    </ion-list>
+  </ion-content>
+</ion-popover-view>

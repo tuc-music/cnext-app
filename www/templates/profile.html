@@ -1,0 +1,53 @@
+<ion-view class="login-view">
+  <ion-nav-title align-title="center">
+    <span>{{user.first_name + ' ' + user.last_name}}</span>
+  </ion-nav-title>
+  <ion-content scroll="true">
+    <div class="navbar-fixed cnext-bar">
+      <div id="contextMenu" ng-if="mode=='view'">
+        <button class="icon ion-edit button-clear" ng-click="startEdit()"></button>
+      </div>
+      <div id="contextMenu" ng-if="mode=='edit'">
+        <button ng-show="mode=='edit'" class="icon ion-android-close button-clear" ng-click="endEdit()"></button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col col-center">
+        <div class="card login-container bordered-cnext" content-tabs tabsdata='tabsdata'>
+          <div class="item font-large text-center cnext-gradient-bg">{{'PERSONAL_INFO' | translate}}</div>
+          <div class="padding text-center">
+            <div class="margin-horizontal-4 bordered-bottom-dark">
+              <!--<img style="max-width:100px;" user-img="" src="" issuer="{{user.issuer}}" social-id="{{user.socialId}}">-->
+              <img style="max-width:100px;" ng-src="{{imgUrl(user.socialId,user.issuer)}}">
+            </div>
+            <div class="row">
+              <div class="col col-33">{{'FNAME' | translate}}</div>
+              <div class="col col-67 text-left">{{user.firstName}}</div>
+            </div>
+            <div class="row bordered-bottom-dark">
+              <div class="col col-33">{{'LNAME' | translate}}</div>
+              <div class="col col-67 text-left">{{user.lastName}}</div>
+            </div>
+            <div ng-if="mode=='view'" class="margin-horizontal-4 margin-vertical-16 bordered-stable padding">
+              <p ng-if="user.statement!=''"  class="cnext-statement" ng-bind-html="user.statement | rawHtml"></p>
+              <p ng-if="user.statement==''" >.........</p>
+            </div>
+            <div class="padding bordered-cnext" ng-if="mode=='edit'">
+              <div class="col bordered-bottom-dark">{{'STATEMENT_PROMPT' | translate}}:</div>
+              <div ng-if="mode=='edit'" class="margin-horizontal-4 margin-vertical-16 bordered-bottom-dark padding">
+                  <label class="item item-input row-no-padding">
+                    <textarea class="bordered-stable highlighted" rows="6" ng-model="user.statement" placeholder="{{'STATEMENT_HELP' | translate}}"></textarea>
+                  </label>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <button class="button button-small button-cnext float-left" ng-click="endEdit()">{{'CANCEL' | translate}}</button>
+                  <button class="button button-small button-cnext float-right" ng-click="updateUser()">{{'SAVE' | translate}}</button>
+              </div>
+              </div>
+          </div>
+        </div>
+    </div>
+
+  </ion-content>
+</ion-view>

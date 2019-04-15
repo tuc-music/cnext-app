@@ -1,0 +1,36 @@
+<ion-view>
+  <ion-nav-title align-title="center">
+    <span translate="NOTIFICATIONS">{{"NOTIFICATIONS" | translate}}</span>
+  </ion-nav-title>
+  <ion-content>
+    <ion-refresher spinner="lines" on-refresh="doRefresh()"></ion-refresher>
+    <div class="navbar-fixed cnext-bar"></div>
+    <div ng-if="data.notifications.length==0" class="margin-4 padding">{{'NO_NOTIFICATIONS_YET' | translate}}</div>
+    <ul class="list no-padding">
+      <div class="card margin-4 cnext-post-card" ng-repeat="ntf in data.notifications track by $index">
+        <div class="row-no-padding item item-borderless item-button-right">
+          <div class="item-text-wrap padding" style="margin-right: 35px;">
+            <span ng-class="{'text-bold text-black':!ntf.processed}">{{ntf.popUpTitle}}</span>
+            <p ng-if="ntf.receivedOn" class="note">{{ntf.receivedOn | amCalendar}}</p>
+            <p ng-if="ntf.dateTimeSent" class="note">{{ntf.dateTimeSent | amCalendar}}</p>
+          </div>
+          <button class="button button-icon ion-more" ng-click="manageNotification(ntf,$event)"></button>
+        </div>
+        <div class="no-padding padding-horizontal font-large" style="margin-right:15px;" ng-init="showDetails=false" ng-click="showDetails = !showDetails">
+          <span class="">{{"DETAILS" | translate}}...
+            <span class="ion-chevron-down float-right" ng-show="!showDetails"></span>
+            <span class="ion-chevron-up float-right" ng-show="showDetails"></span>
+          </span>
+        </div>
+          <div class="padding-horizontal" ng-if="showDetails">
+            <p class="item-text-wrap" compile-html="ntf.popUpMsg" open-external-url></p>
+            <p class="note" ng-if="ntf.eventId">{{"EVENT" | translate}}: {{ntf.eventTitle |
+              cut:true:30:'...'}}</p>
+            <p class="note" ng-if="ntf.ntfType=='reqPst' && ntf.hashtag">{{"HASHTAG" | translate}}: <span
+              class="calm">{{ntf.hashtag}}</span></p>
+          </div>
+
+      </div>
+    </ul>
+  </ion-content>
+</ion-view>

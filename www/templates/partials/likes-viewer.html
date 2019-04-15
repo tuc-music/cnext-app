@@ -1,0 +1,23 @@
+<ion-modal-view class="cnext-modal" style="max-height: 300px;">
+  <ion-header-bar class="bar bar-header cnext-gradient-bg">
+    <h4 class="title text-center" style="color:white;">{{'USER_LIKES'|translate}}</h4>
+  </ion-header-bar>
+  <ion-content>
+    <div class="list">
+      <a class="item item-avatar-left" href="#" ng-repeat="like in postLikes">
+        <img width="40px" ng-src="{{imgUrl(like.user.socialId,like.user.issuer)}}">
+        <h3 class="item-text-wrap margin-vertical-8">{{like.user.name}}</h3>
+        <p>{{like.created | amCalendar}}</p>
+      </a>
+    </div>
+  </ion-content>
+  <ion-footer-bar class="bar bar-footer" style="height: 70px;">
+    <div class="row padding">
+      <div class="col col-25">
+      </div>
+      <div class="col col-75 text-right">
+        <a class="button button-small button-cnext" ng-click="PostsService.closeLikesViewer(this.$parent)">{{'OK' | translate}}</a>
+      </div>
+    </div>
+  </ion-footer-bar>
+</ion-modal-view>

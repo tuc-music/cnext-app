@@ -1,0 +1,85 @@
+<ion-view class="settings-view">
+  <ion-nav-title align-title="center">
+    <span translate="SETTINGS">Settings</span>
+  </ion-nav-title>
+  <ion-content>
+    <div class="navbar-fixed cnext-bar"></div>
+    <ul class="list">
+      <div class="item item-divider">{{'NOTIFICATIONS' | translate}}</div>
+      <ion-toggle ng-model="data.pushSettings.receive" ng-change="applyPushPolicy()" toggle-class="toggle-calm">
+        <div class="input-label text-wrap" style="width: 70%">{{'RECEIVE_NTF' | translate}}</div>
+      </ion-toggle>
+      <ion-toggle ng-model="data.pushSettings.show" ng-change="applyPushDisplayPolicy()" toggle-class="toggle-calm">
+        <div class="input-label text-wrap" style="width: 70%">{{'DISPLAY_NTF' | translate}}</div>
+      </ion-toggle>
+      <div class="item item-divider"  translate="GUI"></div>
+      <label class="item item-select item-input">
+        <div class="input-label text-wrap" style="width: 70%">{{'GUI_LANGUAGE' | translate}}</div>
+        <select ng-model="data.gui_language"
+                ng-options="lang.code as lang.name for lang in langs">
+        </select>
+      </label>
+      <div class="item item-divider" translate="BROWSING_OF_EVENTS"></div>
+      <ion-toggle ng-model="data.enableGroupFilters" toggle-class="toggle-calm">
+        <div class="input-label text-wrap" style="width: 70%">{{'ALLOW_EVENT_GROUPING' | translate}}</div>
+      </ion-toggle>
+      <label class="item item-select item-input" ng-show="data.enableGroupFilters">
+        <div class="input-label text-wrap" style="width: 70%">
+          {{'GROUP_EVENTS' | translate}}
+        </div>
+        <select ng-model="data.placeFilter"
+                ng-options="filter.value as filter.label | translate for filter in placeFilters"
+                ng-selected="filter.value===data.placeFilter">
+        </select>
+      </label>
+      <label class="item item-select item-input">
+        <div class="input-label text-wrap">{{'DEFAULT_SHOW' | translate}}</div>
+        <select name="timeFilterPref" ng-model="data.timeFilter"
+                ng-options="filter as filter.label | translate for filter in timeFilters track by filter.id">
+        </select>
+      </label>
+      <ion-toggle ng-model="data.showOnlyTopLevelEvents" toggle-class="toggle-calm">
+        <div class="input-label text-wrap" style="width: 70%">{{'SHOW_ONLY_TOP_LEVEL_EVENTS' | translate}}</div>
+      </ion-toggle>
+      <div class="item item-divider" on-hold="toogleAdvancedLbs()">{{'Gaming'}}</div>
+      <div class="item item-button-right" ng-show="advancedLbs">
+        Clear Gaming Data
+        <button class="button button-assertive" ng-click="resetLbsTrackingData()" ng-show="advancedLbs">
+          <i class="icon ion-ios-close-outline"></i>
+        </button>
+      </div>
+      <ion-toggle ng-model="data.lbsSettings.lbsTesting" ng-show="advancedLbs" ng-change="setLbsMode()" toggle-class="toggle-calm">
+        <div class="input-label text-wrap" style="width: 70%">{{'Debug Mode'}}</div>
+      </ion-toggle>
+      <ion-toggle ng-model="data.lbsSettings.usePolyLine" ng-show="advancedLbs" toggle-class="toggle-calm">
+        <div class="input-label text-wrap" style="width: 70%">{{'Connect POIs directly'}}</div>
+      </ion-toggle>
+      <div class="item item-button-right" ng-show="advancedLbs">
+        Upload Gaming Data
+        <button class="button button-balanced" ng-click="uploadLbsData()" ng-show="advancedLbs">
+          <i class="icon ion-upload"></i>
+        </button>
+      </div>
+      <ion-toggle ng-model="data.lbsSettings.allow" toggle-class="toggle-calm">
+        <div class="input-label text-wrap" style="width: 70%">{{'Play Games'}}</div>
+      </ion-toggle>
+
+      <!--<ion-toggle ng-model="data.lbsSettings.bcn.allow" toggle-class="toggle-calm">
+        <div class="input-label text-wrap" style="width: 70%">{{'Track iBeacons'}}</div>
+      </ion-toggle>
+      <ion-toggle ng-model="data.lbsSettings.gps.allow" toggle-class="toggle-calm">
+        <div class="input-label text-wrap" style="width: 70%">{{'Track Geofences'}}</div>
+      </ion-toggle>-->
+    </ul>
+  </ion-content>
+  <ion-footer-bar class="bar bar-footer" style="height: 50px;">
+    <div class="row row-no-padding padding-4 padding-horizontal">
+      <div class="col col-25">
+        <button class="button button-small button-cnext" ng-click="revertSettings()">{{'REVERT' | translate}}</button>
+      </div>
+      <div class="col col-75 text-right">
+        <a class="button button-small button-cnext" ng-click="saveSettings()">{{'SAVE' | translate}}</a>
+      </div>
+    </div>
+  </ion-footer-bar>
+</ion-view>

@@ -1,0 +1,47 @@
+<ion-modal-view class="cnext-modal" name="game-help">
+  <ion-header-bar class="bar bar-header cnext-gradient-bg">
+    <h1 class="title" style="color:white;">{{'cNext Gaming'}}</h1>
+  </ion-header-bar>
+
+  <ion-content scroll="true">
+    <div class="card bordered-cnext">
+      <h3>Requirements</h3>
+      <ul style="display: block; list-style-type: disc; margin: 1em; padding-left: 10px; padding-bottom: 2px;">
+        <li>You must be logged in the cNext app</li>
+        <li>You must have enabled Push Notifications from the app settings</li>
+        <li>You must be online</li>
+        <li>You must enable location (gps) services (from your device settings) and grant permission to the cNext App</li>
+        <li>You may need to have Bluetooth enabled.
+          <ul ng-if="os==='iOS'" style="display: block; list-style-type: disc; padding-left: 10px; padding-bottom: 2px;">
+            <li>On iOS you have to turn Bluetooth on from your device settings</li>
+          </ul>
+        </li>
+      </ul>
+      <h3>How to Play</h3>
+      <ol style="display: block; list-style-type: decimal; margin: 1em; padding-left: 10px; padding-bottom: 2px;">
+        <li>Once you get a notification to play a game, make sure that you meet the above requirements.</li>
+        <li>You can start playing the game by using the "Start" button in the Gaming page of the App.</li>
+        <li>While playing the game, your gps location is tracked and when you accomplish a mission (i.e. find a point of interest, perform an action that is asked, etc.) you will get feedback and/or new instructions through push notifications</li>
+        <li>When you are in a place which you guess it is the one you were instructed to find, open the cNext App to see if your guess is correct. You may need to move a bit if you are not so sure where exactly to be.</li>
+        <li>It is not necessary to keep the App open while changing locations. Just when you are approaching a place open the App and keep it on top of others (in foreground).</li>
+        <li>If you accidentally clear/remove a notification without seeing the message, or if you want to see again a message received by the game, go the Gaming page in the cNext app and tap on the marker of the place you were when the notification was received.</li>
+        <li>To confirm an action (when asked by the game), you must tap on the "OK" button of the message window. If you don't confirm, you will not be able to proceed in the game.</li>
+        <li>If you change your mind and and you want to confirm an action later, you can still go the Gaming page of the app and tap on the marker of the related place to view and accept the messages/instructions received</li>
+      </ol>
+      <h3>Knowing your Status</h3>
+      <p>To check the status of the game you can tap on the left icon of the Gaming page in the cNext app. The following status information is provided:</p>
+      <ul style="display: block; list-style-type: disc; margin: 1em; padding-left: 10px; padding-bottom: 2px;">
+        <li style="font-weight: 400;"><strong>Started</strong><span style="font-weight: 400;">: Checked when you have accomplished at least one mission<br /></span></li>
+        <li style="font-weight: 400;"><strong>Completed</strong><span style="font-weight: 400;">: Checked when you have accomplished all missions</span></li>
+        <li style="font-weight: 400;"><strong>Active</strong><span style="font-weight: 400;">: Checked when game is active and can be played</span></li>
+      </ul>
+    </div>
+  </ion-content>
+  <ion-footer-bar class="bar bar-footer" style="height: 70px;">
+    <div class="row padding">
+      <div class="col">
+        <button class="button button-cnext float-right" ng-click="closeModal(false)">OK</button>
+      </div>
+    </div>
+  </ion-footer-bar>
+</ion-modal-view>

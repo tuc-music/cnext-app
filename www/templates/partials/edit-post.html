@@ -1,0 +1,52 @@
+<ion-modal-view class="cnext-modal" ng-controller="NewPostCtlr">
+  <ion-header-bar class="bar bar-header cnext-gradient-bg">
+    <h1 class="title" style="color:white;">{{editorMode | translate}}</h1>
+  </ion-header-bar>
+  <ion-content>
+    <div class="">
+      <!--Create new Post Form-->
+      <form class="margin-4 margin-vertical-16 cnext-post-card padding" name="customQuoteForm">
+        <div ng-if="forceSelectEvent==true" class="margin-vertical-4 row font-large bordered-cnext row-center" ng-click="showEventSelectionMenu()">
+          <div class="col col-90">@&nbsp; {{selectedEvent.title}}</div>
+          <div class="col col-10">
+            <i class="icon ion-edit float-right font-large"></i>
+          </div>
+        </div>
+        <div class="">
+            <textarea class="bordered-cnext" style="width: 100%;" rows="6" ng-model="newPost.caption" placeholder="{{'NEW_POST_PROMPT' | translate}}"></textarea>
+          <!--<div contenteditable ng-model="newPost.caption" placeholder="{{'NEW_POST_PROMPT' | translate}}"></div>-->
+        </div>
+        <div ng-if="newPost.mediaUrl && newPost.mediaUrl!=='' && newPost.type==='img'" class="margin-vertical-4 text-center cnext-post-card bordered-cnext">
+          <img class="postImage" ng-src="{{newPost.mediaUrl}}"/>
+        </div>
+        <div ng-if="newPost.mediaUrl && newPost.mediaUrl!=='' && newPost.type==='vid'" class="margin-vertical-4 text-center cnext-post-card bordered-cnext">
+          <p class="warning-msg"><i class="ion-alert-circled" style="color: #8a6d3b"></i> {{'VIDEO_UPLOAD_WARNING' | translate}}</p>
+          <video style="max-height: 260px;" class="post-video-player" controls>
+            Video content cannot be displayed...
+            <source ng-src="{{PostsService.getVideoSrc(newPost)}}" type="video/mp4"/>
+          </video>
+        </div>
+        <div ng-if="cfg.onPushReply">{{'HASHTAG' | translate}}: <span class="positive">{{newPost.hashtag}}</span></div>
+        <div class="row row-no-padding padding-vertical">
+          <div class="col col-33">
+            <button class="button button-small button-cnext float-left" ng-click="closeCreatePostModal()">{{'CANCEL' | translate}}</button>
+          </div>
+          <div class="col col-67 text-right">
+            <!--User is not Logged in-->
+            <button ng-if="!isUserLoggedIn" class="button button-small button-cnext" ng-click="showLogin(postEditorParams)">{{'LOGIN_TO_POST' | translate}}</button>
+            <!--Photo Buttons-->
+            <button ng-if="isUserLoggedIn && hasUserAcceptedDisclaimer && (!newPost.mediaUrl || newPost.mediaUrl==='')" class="button button-small button-cnext ion-plus-round row-no-padding padding-horizontal-4" ng-click="showPhotoSelector('PHOTO')"> <i class="ion-image font-larger cnext-purple-text"></i></button>
+            <button ng-if="isUserLoggedIn && hasUserAcceptedDisclaimer && (newPost.mediaUrl && newPost.mediaUrl!==''  && newPost.type==='img')" class="button button-small button-cnext ion-minus-round row-no-padding padding-horizontal-4" ng-click="deleteMediaFromPost('PHOTO')"> <i class="ion-image font-larger cnext-purple-text"></i></button>
+            <!--Video Buttons-->
+            <button ng-if="isUserLoggedIn && hasUserAcceptedDisclaimer && (!newPost.mediaUrl || newPost.mediaUrl==='')" class="button button-small button-cnext ion-plus-round row-no-padding padding-horizontal-4" ng-click="showPhotoSelector('VIDEO')"> <i class="ion-ios-film font-larger cnext-purple-text"></i></button>
+            <button ng-if="isUserLoggedIn && hasUserAcceptedDisclaimer && (newPost.mediaUrl && newPost.mediaUrl!=='' && newPost.type==='vid')" class="button button-small button-cnext ion-minus-round row-no-padding padding-horizontal-4" ng-click="deleteMediaFromPost('VIDEO')"> <i class="ion-ios-film font-larger cnext-purple-text"></i></button>
+            <!--Posting/Saving Buttons-->
+            <button ng-if="isUserLoggedIn && hasUserAcceptedDisclaimer && editorMode==='NEW_POST'" class="button button-small button-cnext" ng-disabled="(newPost.caption==='' && (!newPost.mediaUrl || newPost.mediaUrl===''))" ng-click="doPost()">{{'POST' | translate}}</button>
+            <button ng-if="isUserLoggedIn && !hasUserAcceptedDisclaimer" class="button button-small button-cnext" ng-click="showDisclaimer(false)">{{'AGREE_TO_POST' | translate}}</button>
+            <button ng-if="isUserLoggedIn && hasUserAcceptedDisclaimer && editorMode==='EDIT_POST'" class="button button-small button-cnext" ng-disabled="(isPristinePost() || (newPost.caption==='' && (!newPost.mediaUrl || newPost.mediaUrl==='')))" ng-click="doPost()">{{'SAVE' | translate}}</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </ion-content>
+</ion-modal-view>

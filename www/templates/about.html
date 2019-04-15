@@ -1,0 +1,36 @@
+<ion-view>
+  <ion-nav-title align-title="center">
+    <span>{{"ABOUT" | translate }}</span>
+  </ion-nav-title>
+  <ion-content scroll="true">
+    <div class="navbar-fixed cnext-bar"></div>
+    <div class="row">
+      <div class="col col-center">
+        <div class="card bordered-cnext padding">
+          <p translate="ABOUT_TEXT1"></p>
+          <p class="bordered-bottom-dark" translate="ABOUT_TEXT2">
+          <p class="padding-horizontal font-large text-center"><a href="#" onclick="window.open('http://www.caravanext.eu', '_system', 'location=yes'); return false;">www.caravanext.eu</a></p>
+        </div>
+        <div class="card bordered-cnext padding text-center">
+          <img class="margin-4" src="img/cn_logo.svg" width="300px">
+          <img class="margin-4" src="img/eu_logo.svg" width="300px">
+          <p class="bordered-bottom-dark"></p>
+          <div class="text-center">{{"DES_DEV" | translate }}<br/>
+            <p class="padding-4 font-large text-center">
+              <a class="margin-vertical-8" onclick="window.open('http://www.music.tuc.gr', '_system', 'location=yes'); return false;">TUC/MUSIC Lab</a>
+            </p>
+          </div>
+          <div class="padding bordered-bottom-dark">
+            <a href="mailto:nektarios@ced.tuc.gr?subject=cNext App Issue" class="button button-block button-cnext">{{'REPORT_ISSUE' | translate}}</a>
+          </div>
+          <p class="margin-vertical-8" style="margin-top:8px;" on-hold="showAppId=!showAppId">
+            VERSION: {{data.appVer}}
+          </p>
+          <p class="" ng-show="showAppId" style="font-size:0.7em">{{data.appId}}</p>
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </ion-content>
+</ion-view>

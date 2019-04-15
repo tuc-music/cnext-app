@@ -1,0 +1,63 @@
+<ion-view class="">
+  <ion-nav-title align-title="center">
+    <span class="text-center">{{title}}</span>
+  </ion-nav-title>
+  <ion-content>
+    <div class="navbar-fixed cnext-bar">
+    </div>
+    <div class="category-feeds margin-horizontal-4">
+      <div ng-repeat="macro in categoryTopLevelEvents | orderBy: EventsService.getEventDateTime(macro,'start'):timeFilter!==2" class="card margin-4">
+        <a ng-if="macro.subEvents.length==0" ui-sref="app.event({eventId: macro.id})" class="item item-avatar-left item-icon-right bordered-bottom-dark">
+          <img class="" ng-if="macro.icon && macro.icon!='' && macro.icon!='http://cnext.tuc.gr/'" ng-src="{{macro.icon}}">
+          <img class="" ng-if="!macro.icon || macro.icon=='http://cnext.tuc.gr/'" src="img/no_img.png">
+          <div class="bordered-left-dark padding">
+            <p class="title text-bold">{{macro.title}}</p>
+            <p class="note text-wrap">
+              <img src="img/calendar.png" style="height: 10px;">:
+              <span class="note font-small">{{eventsService.getFormattedEventDateRange(macro)}}</span><br/>
+              <img src="img/map-marker.png" style="height: 10px;">:
+              <span class="note font-small" ng-if="macro.venue.title !==macro.venue.city">{{macro.venue.title}}, {{macro.venue.city}}</span>
+              <span class="note font-small" ng-if="macro.venue.title ===macro.venue.city">{{macro.venue.title}}, {{macro.venue.country}}</span>
+            </p>
+            <!--<p class="note text-wrap"><span>{{eventsService.getEventDateTime(macro,'start') | amTimeAgo}}</span> <span>@ {{macro.venue.title}}, {{macro.venue.city}}</span></p>-->
+          </div>
+          <i class="icon ion-ios-arrow-forward"></i>
+        </a>
+        <a ng-if="macro.subEvents.length>0" class="item item-avatar-left item-icon-right  bordered-bottom-dark">
+          <img class="" ng-if="macro.icon && macro.icon!='' && macro.icon!='http://cnext.tuc.gr/'" ng-src="{{macro.icon}}">
+          <img class="" ng-if="!macro.icon || macro.icon=='http://cnext.tuc.gr/'" src="img/no_img.png">
+          <div class="bordered-left-dark padding" ng-click="showEvent(macro.id)">
+            <p class="title text-bold">{{macro.title}}</p>
+            <p class="note text-wrap">
+              <img src="img/calendar.png" style="height: 10px;">:
+              <span class="note font-small">{{eventsService.getFormattedEventDateRange(macro)}}</span><br/>
+              <img src="img/map-marker.png" style="height: 10px;">:
+              <span class="note font-small" ng-if="macro.venue.title !==macro.venue.city">{{macro.venue.title}}, {{macro.venue.city}}</span>
+              <span class="note font-small" ng-if="macro.venue.title ===macro.venue.city">{{macro.venue.title}}, {{macro.venue.country}}</span>
+            </p>
+          </div>
+          <i class="icon ion-chevron-up" ng-show="isGroupShown(macro)" ng-click="toggleGroup(macro)"></i>
+          <i class="icon ion-chevron-down" ng-show="!isGroupShown(macro)" ng-click="toggleGroup(macro)"></i>
+        </a>
+        <div class="list padding-top padding-left" ng-if="isGroupShown(macro)">
+          <a class="item item-accordion  item-avatar-left item-icon-right item-text-wrap" ng-repeat="event in macro.subEvents"
+              ng-show="isGroupShown(macro)" ui-sref="app.event({eventId: event.id})">
+            <img class="" ng-if="event.icon && event.icon!='' && event.icon!='http://cnext.tuc.gr/'" ng-src="{{event.icon}}">
+            <img class="" ng-if="!event.icon || event.icon=='http://cnext.tuc.gr/'" src="img/no_img.png">
+            <div class="bordered-left-stable padding-4">
+              <p class="title">{{event.title}} @ {{macro.title}}</p>
+              <p class="note text-wrap">
+                <img src="img/calendar.png" style="height: 10px;">:
+                <span class="note font-small">{{eventsService.getFormattedEventDateRange(event)}}</span><br/>
+                <img src="img/map-marker.png" style="height: 10px;">:
+                <span class="note font-small" ng-if="event.venue.title !==macro.venue.city">{{event.venue.title}}, {{event.venue.city}}</span>
+                <span class="note font-small" ng-if="event.venue.title ===macro.venue.city">{{event.venue.title}}, {{event.venue.country}}</span>
+              </p>
+            </div>
+            <i class="icon ion-ios-arrow-forward"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

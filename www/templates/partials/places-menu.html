@@ -1,0 +1,14 @@
+<ion-popover-view style="overflow-y: scroll; height: 400px!important;">
+  <ion-content>
+    <ion-list >
+      <ion-radio style="font-size:1em;"
+        ng-repeat="filter in filterOptions.placeFilters track by filter.id"
+        ng-click="setFilter(filter.id,'place',filter.label)"
+        ng-model="activeFilters.placeFilter"
+        ng-value="filter.id"
+      >
+        {{filter.label}}
+      </ion-radio>
+    </ion-list>
+  </ion-content>
+</ion-popover-view>

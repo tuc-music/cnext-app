@@ -1,0 +1,12 @@
+<ion-popover-view style="overflow-y: scroll; max-height: 250px!important;">
+  <ion-content>
+    <div>
+      <h5 class="bordered-bottom-dark padding-4">{{currentGame.name}}</h5>
+      <ion-list class="item-text-wrap font-smaller">
+          <ion-checkbox ng-model="currentGame.started" onclick="return false;">Started</ion-checkbox>
+          <ion-checkbox ng-model="currentGame.completed" onclick="return false;">Completed</ion-checkbox>
+          <ion-checkbox ng-model="currentGame.active" onclick="return false;">Active</ion-checkbox>
+      </ion-list>
+    </div>
+  </ion-content>
+</ion-popover-view>

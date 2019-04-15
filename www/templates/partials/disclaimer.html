@@ -1,0 +1,25 @@
+<ion-modal-view class="cnext-modal" name="disclaimer">
+  <ion-header-bar class="bar bar-header cnext-gradient-bg">
+    <h1 class="title" style="color:white;">{{'TERMS_OF_SERVICE' | translate}}</h1>
+    <!--<button class="button button-clear button-cnext" ng-click="signUpModal.remove()">Cancel</button>-->
+  </ion-header-bar>
+  <ion-content scroll="true">
+    <div class="row row-no-padding" ng-controller="AppCtlr">
+      <div class="col col-center">
+        <div class="card login-container bordered-cnext" ng-init="termsFile='templates/partials/terms_'+'en'+'.html'" >
+          <div class="item font-larger text-center cnext-gradient-bg">{{'READ_CAREFULLY' | translate}}</div>
+          <div ng-include="termsFile"></div>
+          <div class="item item-body bottom-content">
+            <button type="submit" class="button button-cnext float-left" ng-click="declineDisclaimer()">
+              {{'DECLINE' | translate}}
+            </button>
+            <button type="submit" class="button button-cnext float-right" ng-click="acceptDisclaimer()">
+              {{'ACCEPT' | translate}}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </ion-content>
+</ion-modal-view>

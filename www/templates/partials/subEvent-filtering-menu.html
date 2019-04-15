@@ -1,0 +1,63 @@
+<ion-modal-view class="cnext-modal" style="max-height: 300px;">
+  <ion-header-bar class="bar bar-header cnext-gradient-bg">
+    <h1 class="title text-center" style="color:white;">{{'SUB_EVENT_FILTERING'|translate}}</h1>
+  </ion-header-bar>
+  <ion-content>
+    <div class="margin-4 margin-vertical-16 cnext-post-card row-center">
+      <div class="row">
+        <div class="col col-50 cnext-purple-text font-large">
+          {{'TIME' | translate}}
+        </div>
+        <div class="col col-50 cnext-purple-text font-large">
+          {{'CATEGORY' | translate}}
+        </div>
+        <hr/>
+      </div>
+      <div class="row row-no-padding padding-4">
+        <div class="col col-50">
+          <ion-list class="bordered-bottom-dark cnext-radio-list">
+            <ion-radio
+              name="timeFilter"
+              style="font-size:1em;"
+              ng-repeat="filter in data.timeFilters | orderBy:'id'"
+              ng-model="data.activeTimeFilter"
+              ng-click="setTimeFilter(filter);"
+              ng-value="filter.id">
+              {{filter.label | translate}}
+            </ion-radio>
+          </ion-list>
+        </div>
+        <div class="col col-50">
+          <ion-list id="catFilter" class="cnext-radio-list">
+            <ion-radio
+              name="catFilter"
+              style="font-size:1em;"
+              ng-model="data.activeCategoryFilter"
+              ng-click="setCategoryFilter({id:0});"
+              ng-value="0">{{'ANY_CATEGORY' | translate}}
+            </ion-radio>
+            <ion-radio
+              name="catFilter"
+              style="font-size:1em;"
+              ng-repeat="category in data.subEventCategories | orderBy:'id'"
+              ng-model="data.activeCategoryFilter"
+              ng-click="setCategoryFilter(category);"
+              ng-value="category.id">
+              {{category.title}}
+            </ion-radio>
+          </ion-list>
+        </div>
+      </div>
+    </div>
+  </ion-content>
+  <ion-footer-bar class="bar bar-footer" style="height: 70px;">
+    <div class="row padding">
+      <div class="col col-25">
+        <button class="button button-small button-cnext" ng-click="closeFilterMenu()">{{'CANCEL' | translate}}</button>
+      </div>
+      <div class="col col-75 text-right">
+        <a class="button button-small button-cnext" ng-click="applyFilters()">{{'OK' | translate}}</a>
+      </div>
+    </div>
+  </ion-footer-bar>
+</ion-modal-view>

@@ -1,0 +1,12 @@
+<ion-view>
+  <ion-nav-title align-title="center">
+    <span class="text-center">{{'TERMS_OF_SERVICE' | translate}}</span>
+  </ion-nav-title>
+  <ion-content ng-init="termsFile='templates/partials/terms_'+'en'+'.html'">
+    <div class="navbar-fixed cnext-bar"></div>
+    <div class="padding-horizontal" ng-include="termsFile"></div>
+    <!--<div class="padding text-center">
+      <button class="button button-cnext" onclick="window.open('http://cnext.tuc.gr/legal/privacy_policy.html', '_system', 'location=yes');return false;">{{'FULL_POLICY' | translate}}</button>
+    </div>-->
+  </ion-content>
+</ion-view>

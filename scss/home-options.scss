@@ -1,0 +1,52 @@
+.home-options-view {
+  background-color: $content-bg !important;
+  .options-list {
+    margin-top: auto;
+    margin-bottom: auto;
+    flex-wrap: wrap;
+    -webkit-flex-flow: row wrap;
+    color: $content-color !important;
+  }
+
+  .options-option {
+    // THIS IS FUCKING AWESOME: http://caniuse.com/#feat=viewport-units
+    min-height:200px;
+    @include cssCalc("width", "50vw - 25px");
+    @include cssCalc("max-height", "100vy");
+    /*box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    border-radius: 15px;
+    background-color: $dark;*/
+    position: relative;
+    display: block;
+    /*color: $gray-text !important;*/
+
+    .option-icon {
+      font-size: 8em;
+      /*color: $stable !important;*/
+      color: $cnext-purple !important;
+    }
+
+    .option-title {
+      /*color: $gray-text !important;*/
+      width: 100%;
+      min-height: 30px;
+      position: absolute;
+      bottom: 8px;
+      left: 0px;
+      right: 0px;
+      margin-left: auto;
+      margin-right: auto;
+      font-weight: 500;
+      text-transform: capitalize;
+      font-size: 1.5em;
+      border-top: 1px solid #2b2b2b;
+      border-bottom: 1px solid #2b2b2b;
+    }
+  }
+}
+
+
+.post-video-player {
+  background-color: #2b2b2b;
+  @include cssCalc("max-width", "95vw");
+}

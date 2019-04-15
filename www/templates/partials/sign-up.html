@@ -1,0 +1,54 @@
+<ion-modal-view class="cnext-modal">
+  <ion-header-bar class="bar bar-header cnext-gradient-bg">
+    <h1 class="title" style="color:white;">{{"CREATE_ACCOUNT" | translate}}</h1>
+    <!--<button class="button button-clear button-cnext" ng-click="signUpModal.remove()">Cancel</button>-->
+  </ion-header-bar>
+  <ion-content scroll="true" ng-controller="SignUpCtlr">
+    <div class="row">
+      <div class="col col-center">
+        <div class="card login-container bordered-cnext" content-tabs tabsdata='tabsdata'>
+          <div class="item font-large text-center cnext-gradient-bg">{{"PERSONAL_INFO" | translate}}</div>
+          <form name="signUpForm" class=""ng-cloak>
+            <div class="list">
+              <label class="item item-input">
+                <input type="email" placeholder="Email *" name="email" ng-model="user.email" required ng-class="{ 'has-error' : signUpForm.email.$invalid && !signUpForm.email.$pristine }">
+              </label>
+              <p ng-show="signUpForm.email.$invalid && !signUpForm.email.$pristine" class="help-block padding-horizontal">{{'INVALID_EMAIL'|translate}}</p>
+              <label class="item item-input">
+                <input type="password" placeholder="{{'PASSWORD' | translate}} *" id="pw1" name="pw1" ng-model="user.pw" ng-minlength="6" required>
+              </label>
+              <p class="help-block padding-horizontal" ng-show="signUpForm.pw1.$error.minlength">{{'SHORT_PWD'|translate}}</p>
+              <label class="item item-input">
+                <input type="password" placeholder="{{'CONFIRM_PASSWORD' | translate}} *" id="pw2" name="pw2" ng-model="user.pwc" required password-confirm match-target="user.pw">
+              </label>
+              <p class="help-block padding-horizontal" ng-show="signUpForm.pw2.$error.match">{{'PWDS_NOT_MATCH'|translate}}</p>
+              <label class="item item-input">
+                <input type="text" placeholder="{{'FNAME' | translate}} *" name="firstName" ng-model="user.firstName" required>
+              </label>
+              <p class="help-block padding-horizontal" ng-show="signUpForm.firstName.$error.required && signUpForm.firstName.$pristine===false">{{'FNAME_REQUIRED'|translate}}</p>
+              <label class="item item-input">
+                <input type="text" placeholder="{{'LNAME' | translate}} *" name="lastName" ng-model="user.lastName" required>
+              </label>
+              <p class="help-block padding-horizontal" ng-show="signUpForm.lastName.$error.required && !signUpForm.lastName.$pristine">{{'LNAME_REQUIRED'|translate}}</p>
+              <label class="item item-input">
+                <div class="row">
+                  <div class="col"><img class="thumbnail" width="50px" ng-src="{{user.photoUrl}}"></div>
+                  <div class="col"><button class="button button-cnext float-right" ng-click="showPhotoSelector()">{{'CHANGE_PHOTO' | translate}}</button></div>
+                </div>
+              </label>
+            </div>
+            <div class="item item-body bottom-content">
+              <button type="submit" class="button button-cnext float-left" ng-click="signUpModal.remove()">
+                {{'CANCEL' | translate}}
+              </button>
+              <button type="submit" class="button button-cnext float-right" ng-click="signUp()" ng-disabled="(!signUpForm.$valid===true)">
+                {{'REGISTER' | translate}}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </ion-content>
+</ion-modal-view>

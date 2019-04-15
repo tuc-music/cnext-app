@@ -1,0 +1,95 @@
+<div class="wordpress-view">
+  <div class="cnext-post-card margin-horizontal-4"
+       ng-if="(feed.status.appliedFilters.length>0 && !data.event) || (feed.status.appliedFilters.length>1 && data.event)">
+    <div class="cnext-gradient-bg padding-vertical"><span class=" padding-4 text-white">Applied Filters</span>
+      <i class="button button-small button-clear ion-ios-close-outline text-white font-larger float-right"
+         style="margin-right:3px" ng-click="fs.clearFilters(feed)"></i>
+    </div>
+    <div ng-repeat="filter in feed.status.appliedFilters" ng-if="!(filter.key==='eventId' && data.event)"
+         class="row padding-4 cnext-purple-text bordered-bottom-stable">
+      <div class="col col-80">{{filter.title | cut:true:40:' ...'}}</div>
+      <div class="col col-20">
+        <i class="button-cnext ion-ios-close-outline font-larger float-right" ng-click="fs.removeFilter(filter.key,feed)"></i>
+      </div>
+    </div>
+  </div>
+  <div ng-if="!isOnline" class="padding">{{'ON_OFFLINE' | translate}}</div>
+  <div ng-if="isOnline && feed.status.totalPages===0 && feed.data.length<=0 && feed.status.canLoadMore==false" class="margin-4 padding">{{'NO_POSTS_YET' |
+    translate}}
+  </div>
+  <div ng-if="isOnline && feed.status.totalPages==undefined && feed.status.canLoadMore==false" class="padding">{{'SOMETHING_WRONG' | translate}}</div>
+  <div ng-repeat="post in feed.data track by $index" class="margin-4 margin-vertical-16 cnext-post-card">
+    <button class="button button-icon ion-android-more-vertical float-right font-larger"
+            ng-click="fs.managePost(post,$index,feed)"></button>
+    <div class="item item-borderless item-avatar-left item-button-right margin-4" style="border:none;">
+      <img ng-click="fs.addFeedFilter({authorId:post.author.id},feed)"
+           ng-src="{{imgUrl(post.author.socialId,post.author.issuer)}}">
+      <div class="bordered-left-dark padding-horizontal">
+        <div ng-click="fs.addFeedFilter({authorId:post.author.id},feed)">{{post.author.name}}</div>
+        <div class="">
+          <div class="post-time font-small">
+            <!--<span am-time-ago="post.created"></span>-->
+            <span>{{post.created | amTimezone:angularMomentConfig.timezone | amTimeAgo}}</span>
+          </div>
+          <span ng-if="post.hashtag" class="button button-small button-cnext"
+                ng-click="fs.addFeedFilter({hashtag:post.hashtag},feed)">{{post.hashtag}}</span>
+          <span ng-if="post.hashtag"></span>
+          <span ng-if="!feed.cfg.eventId" class="button button-small button-cnext"
+                ui-sref="app.event({eventId: post.eventId})">@{{post.eventTitle | cut:true:20:' ...'}}</span></div>
+      </div>
+    </div>
+    <div class="item-text-wrap margin-4 bordered-top-dark">
+      <p class="post-excerpt padding" compile-html="PostsService.getHtmlCaption(post)" data-tap-disabled="true"
+         open-external-url></p>
+      <p class="text-center" ng-if="post.type==='img'">
+        <!--<img class="post-photo" image-lazy-src="{{post.mediaUrl}}" image-lazy-loader="ios" lazy-scroll-resize="true" image-lazy-distance-from-right-to-load="200"/>-->
+        <img class="post-photo" ng-if="post.mediaUrl!==undefined" ng-src="{{post.mediaUrl}}"
+             ng-click="fs.showPost(post.id,post.eventId)"/>
+      </p>
+      <!--<p class="text-center" ng-if="post.type==='vid'">
+        <img class="post-photo" ng-if="post.mediaUrl!==''" src="img/app-logo.png" ng-click="fs.showPost(post.id,post.eventId)"/>
+      </p>-->
+      <div class="text-center" ng-if="post.type==='vid'">
+        <img width="100%" src="img/cn-video.svg"  ng-click="fs.showPost(post.id,post.eventId)"/>
+        <!--<video ng-click="fs.showPost(post.id,post.eventId)"
+               width="200px";
+               playsinline
+               poster="img/app-logo.png"
+               controls
+               class="cnext-video">
+          Video content cannot be displayed...
+          <source ng-src="{{PostsService.getVideoSrc()}}" type="video/mp4"/>
+        </video>-->
+      </div>
+    </div>
+    <p class="padding-horizontal font-small">
+        <span ng-click="PostsService.showLikesViewer(post,this)" class="note float-left"
+              ng-if="post.numOfLikes>0">{{'LIKES' | translate:'{ numOfLikes: "'+post.numOfLikes +'" }' }}</span>
+      <span ui-sref="app.post({eventId:event.id,postId:post.id,forComment:false})" class="note float-right"
+            ng-if="post.numOfComments>0">{{post.numOfComments}} {{'COMMENTS' | translate}}</span>
+    </p>
+    <div class="row row-center row-no-padding padding-4 stable-bg bordered-top-purple">
+      <div class="col col-33 padding-4 text-center">
+        <button class="button button-small"
+                ng-class="{'ion-ios-heart':post.likeId,'ion-ios-heart-outline': !post.likeId}"
+                ng-disabled="!user"
+                ng-click="PostsService.likeUnlikePost(post,$event)"> {{'LIKE' | translate}}
+        </button>
+      </div>
+      <div class="col col-33 padding-4 text-center bordered-left-grey">
+        <button class="button button-small ion-ios-chatboxes-outline" ng-click="fs.showPost(post.id,post.eventId,true)">
+          {{'COMMENT' | translate}}
+        </button>
+      </div>
+      <div class="col col-33  padding-4 text-center bordered-left-grey">
+        <button class="button button-small ion-social-facebook-outline" ng-click="PostsService.sharePost2FB(post)">
+          {{'SHARE' | translate}}
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- Infinit scroll -->
+  <ion-infinite-scroll ng-if="feed.status.canLoadMore" mmediate-check="true" on-infinite="fs.loadMorePosts(feed)"
+                       distance="5%" spinner="lines">
+  </ion-infinite-scroll>
+</div>

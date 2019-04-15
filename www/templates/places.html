@@ -1,0 +1,28 @@
+<ion-view class="maps-view">
+  <ion-nav-title align-title="center">
+    <span class="text-center">{{"EVENT_PLACES" | translate}}</span>
+  </ion-nav-title>
+  <ion-content scroll="false">
+    <!--<div class="navbar-fixed cnext-bar">
+      <div id="contextMenu">
+        <button class="icon ion-more button-clear" ng-click="filterMenu.show($event)"></button>
+      </div>
+    </div>-->
+    <div class="navbar-fixed cnext-bar row" style="padding:0;">
+      <div class="col col-50">
+        <span ng-click="timeFilterMenu.show($event)" class="text-white padding-bottom">
+          <i class="icon ion-android-more-vertical text-white"></i>&nbsp;{{activeFilters.timeFilter.label | translate}}</span>
+      </div>
+      <div class="col col-50 text-white text-right">
+        <span
+          ng-if="filteredEvents.length===0"
+          class="text-white padding-bottom">{{"NO_EVENTS" | translate}}</span>
+        <span
+          ng-show="filteredEvents.length>0"
+          ng-click="placeFilterMenu.show($event)" class="text-white padding-bottom">{{activeFilters.placeFilterLabel}}&nbsp;
+          <i class="icon ion-android-more-vertical text-white"></i></span>
+      </div>
+    </div>
+    <div id="map" data-tap-disabled="true"></div>
+  </ion-content>
+</ion-view>

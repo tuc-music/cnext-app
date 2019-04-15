@@ -1,0 +1,214 @@
+<ion-view id="eventViewer" class="feeds-categories-view">
+  <ion-nav-title align-title="center">
+    <span class="text-center">{{data.event.type | capitalize }} {{'EVENT' | translate | capitalize}}</span>
+  </ion-nav-title>
+  <ion-content scroll="true" lazy-scroll>
+    <ion-refresher spinner="lines" on-refresh="doRefresh()"></ion-refresher>
+    <div class="navbar-fixed cnext-bar"></div>
+    <div class="eventTitle text-center" ng-bind-html="data.event.title + data.event.parentEventTitleHtml | rawHtml"></div>
+    <div class="block">
+      <img ng-if="data.event.icon && data.event.icon!='' && data.event.icon!==CONST.BACKEND_URL" ng-src="{{data.event.icon}}" class="event-photo">
+    </div>
+    <!--Event SpatioTemporal info Section-->
+    <div class="margin-horizontal-4">
+      <div class="row">
+        <div class="col event-info padding-vertical">
+          <span class="ion-location icon-right section-title"></span>
+          <span class="padding section-title">{{'WHERE' | translate}}</span>
+          <p class="bordered-top-dark margin-vertical-4">{{data.event.venue.title}}, {{data.event.venue.city}}, {{data.event.venue.country}}</p>
+          <p class="font-larger text-center">
+            <span ng-if="data.event.venue.icon !== '' && data.event.venue.icon!==CONST.BACKEND_URL" ng-click="showFullImage(data.event.venue.icon);" class="ion-image section-title font-larger"></span>
+            <span ng-if="data.event.venue.url !== '' && data.event.venue.icon !== '' && data.event.venue.icon!== CONST.BACKEND_URL" class="font-larger">&nbsp;&nbsp;&nbsp;</span>
+            <span ng-if="data.event.venue.url !== ''" ng-click="openUrlInSystem(data.event.venue.url)" class="ion-android-open section-title font-larger"></span>
+          </p>
+        </div>
+        <div class="col event-info padding-vertical bordered-left-dark">
+          <span class="ion-clock icon-right section-title"></span>
+          <span class="padding section-title">{{'WHEN' | translate}}</span>
+          <p class="bordered-top-dark margin-vertical-4">
+            <img src="img/badge-clock-start.svg" style="height:16px; position:relative; top: 3px;"/> <span>{{data.event.startDate}}</span><span ng-if="data.event.parentEventId!==''">, {{data.event.startTime | cut:false:5:' '}}</span>
+          </p>
+          <p style="margin: 0px;">
+            <img src="img/badge-clock-stop.svg" style="height:16px; position:relative; top: 3px;"/> <span>{{data.event.endDate}}</span><span ng-if="data.event.parentEventId!==''">, {{data.event.endTime | cut:false:5:' '}}</span>
+          </p>
+          <p ng-if="data.event.parentEventId!=='' && data.event.subEvents.length===0" class="text-center note font-small">({{'LOCAL_TIME' | translate}})</p>
+        </div>
+      </div>
+      <div class="row bordered-bottom-dark">
+        <div class="col event-info padding">
+          <div class="text-center bottom-5" ng-if="onDevice">
+            <button class="button button-small button-cnext" ng-click="takeMeThere()">{{'TAKE_ME_THERE' | translate}}</button>
+          </div>
+        </div>
+        <div class="col event-info padding bordered-left-dark">
+          <div class="text-center bottom-5" ng-if="onDevice">
+            <button ng-hide="data.isEventInCal" class="button button-small button-cnext" ng-click="addToCalendar()">
+              {{'ADD_TO_CAL' | translate}}
+            </button>
+            <button ng-show="data.isEventInCal" class="button button-small button-cnext"ng-click="openEventInCalendar()">
+              {{'VIEW_IN_CAL' | translate}}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--SubEvents Section-->
+    <div class="margin-horizontal-4" ng-if="data.event.subEvents.length>0">
+      <h2 class="section-title bordered-bottom-dark padding">
+        <div ng-init="showProgramme=true">
+          <!--<span ng-click="catFilterMenu.show($event)">-->
+          <span ng-click="showFilterMenu();">
+            <span class="padding-bottom"><i class="icon ion-android-more-vertical cnext-purple-text"></i></span>
+            <span class="section-title">{{'PROGRAMME' | translate}}</span>
+            <span ng-hide="data.activeCategoryFilter===0" class="section-title font-small"> ({{data.activeCategoryLabel | lowercase}})</span>
+          </span>
+          <span class="section-toggle paddding" ng-click="showProgramme = !showProgramme">
+            <i class="section-toggle icon ion-chevron-down" ng-show="!showProgramme"></i>
+            <i class="section-toggle icon ion-chevron-up" ng-show="showProgramme"></i>
+          </span>
+        </div>
+      </h2>
+      <div id="programmeDays" ng-show="showProgramme" class="expandable" ng-if="data.subEvents.length>5">
+        <ion-list>
+          <div ng-repeat="(programmeDay,daySubEvents) in data.subEventsByDay">
+            <ion-item ng-class-even="'cnext-light-bg'" ng-class-odd="''"
+                      ng-click="toggleDay(programmeDay)"
+                      ng-class="isDayShown(programmeDay)? 'cnext-purple-text text-bold' :''">
+              <i class="icon" ng-class="isDayShown(programmeDay) ? 'ion-minus' : 'ion-plus'"></i>
+              &nbsp;{{programmeDay | amDateFormat:'MMMM DD'}}
+            </ion-item>
+            <a ng-repeat="subEvent in daySubEvents | orderBy: 'startTime'"
+                      class="item item-accordion  item-avatar-left item-icon-right item-text-wrap"
+                      ui-sref="app.event({eventId: subEvent.id})"
+                      ng-show="isDayShown(programmeDay)">
+              <img class="" ng-if="subEvent.icon && subEvent.icon!='' && subEvent.icon!== CONST.BACKEND_URL"
+                   ng-src="{{subEvent.icon}}">
+              <img class="" ng-if="!subEvent.icon || subEvent.icon==CONST.BACKEND_URL" src="img/no_img.png">
+              <div class="">
+                <p class="title">{{subEvent.title}}</p>
+                <p class="note text-wrap"><span>{{evtService.getFormattedEventDateTime(subEvent,'start','HH:mm')}}</span> <span>@ {{subEvent.venue.title}}, {{subEvent.venue.city}}</span></p>
+              </div>
+              <i class="icon ion-ios-arrow-forward"></i>
+            </a>
+          </div>
+        </ion-list>
+      </div>
+      <div id="programmeBody" ng-show="showProgramme" class="expandable" ng-if="data.subEvents.length<=5">
+        <a ng-repeat="subEvent in data.subEvents | orderBy : ['startDate','startTime']" class="item item-avatar-left item-icon-right"
+           ui-sref="app.event({eventId: subEvent.id})">
+          <img class="" ng-if="subEvent.icon && subEvent.icon!='' && subEvent.icon!== CONST.BACKEND_URL"
+               ng-src="{{subEvent.icon}}">
+          <img class="" ng-if="!subEvent.icon || subEvent.icon==CONST.BACKEND_URL" src="img/no_img.png">
+          <div class="">
+            <p class="title">{{subEvent.title}}</p>
+            <p class="note text-wrap"><span>{{evtService.getFormattedEventDateTime(subEvent,'start','MMMM DD HH:mm')}}</span> <span>@ {{subEvent.venue.title}}, {{subEvent.venue.city}}</span></p>
+          </div>
+          <i class="icon ion-ios-arrow-forward"></i>
+        </a>
+        <p class="text-center font-large" ng-if="data.subEvents.length === 0">
+          <span
+            translate="NO_SUB_EVENTS"
+            translate-value-timelabel="{{data.activeTimeLabel | lowercase}}">
+          </span>&nbsp;
+          <span
+            ng-if="data.activeCategoryFilter !== 0"
+            translate="FOR_SELECTED_CAT"
+            translate-value-catlabel="{{data.activeCategoryLabel | lowercase}}">
+          </span>
+        </p>
+
+      </div>
+    </div>
+
+    <!--Event Description Section-->
+    <div class="margin-horizontal-4" ng-init="shortDescription=true;">
+      <h2 class="section-title bordered-bottom-dark padding">
+        <div ng-init="showDetails=true" ng-click="showDetails = !showDetails">
+          <span class="section-title">{{'DETAILS' | translate}}</span>
+          <span class="section-toggle">
+            <i class="section-toggle icon ion-chevron-down" ng-show="!showDetails"></i>
+            <i class="section-toggle icon ion-chevron-up" ng-show="showDetails"></i>
+          </span>
+        </div>
+      </h2>
+      <div id="eventDetailsBody" ng-show="showDetails"  class="bordered-bottom-dark expandable">
+        <div class="item item-text-wrap padding">
+          <h2 class="bordered-bottom-stable">{{'DESCRIPTION' | translate}}</h2>
+          <!--Remove hm-linkify attribute and open-external-url directive in the following paragraph to disable links in event descriptions
+          If links are crossing the hm-limit number in the given text, then they are not processed well.-->
+          <div>
+            <div ng-class="shortDescription ? 'item-expand inactive' : 'item-expand active'">
+              <p compile-html="getCompiledHtmlDescription()" open-external-url=""></p>
+            </div>
+            <div ng-click="shortDescription = !shortDescription" class="item-expand-footer text-right">
+              <i ng-class="shortDescription ? 'ion-chevron-down' : 'ion-chevron-up'"></i>
+              <!--{{ shortDescription ? moreKey : lessKey }}-->
+            </div>
+          </div>
+          <!--<p hm-read-more-->
+            <!--hm-text="{{data.event.description}}"-->
+            <!--hm-limit="250"-->
+            <!--hm-more-text="{{'MORE' | translate}}"-->
+            <!--hm-less-text="{{'LESS' | translate}}"-->
+            <!--hm-dots-class="dots"-->
+            <!--hm-link-class="links"-->
+            <!--hm-linkify="false"-->
+            <!--open-external-url>-->
+          <!--</p>-->
+        </div>
+        <!--Event Official Gallery Section-->
+        <div ng-if="data.event.gallery.length>0" class="row-no-padding padding-top padding-bottom">
+          <ion-slide-box show-pager="true">
+            <ion-slide ng-repeat="img in data.event.gallery">
+              <div class="list card">
+                <div class="item item-image">
+                  <img ng-src="{{img.url}}">
+                </div>
+                <div class="item item-body">
+                  <p>{{img.caption}}</p>
+                </div>
+              </div>
+            </ion-slide>
+          </ion-slide-box>
+        </div>
+        <!--Event Organizers and Sponsors Section-->
+        <div class="item row-no-padding padding bordered-bottom-dark">
+          <h2 class="bordered-bottom-stable">{{'CONTRIBUTORS' | translate}}</h2>
+          <div class="category-feeds">
+            <div ng-repeat="org in data.event.organizers" ng-include="'templates/partials/organization.html'"
+                 ng-init="role=('ORGANIZER' | translate)" class="item item-avatar-left item-text-wrap">
+            </div>
+            <div ng-repeat="org in data.event.coOrganizers" ng-include="'templates/partials/organization.html'"
+                 ng-init="role=('CO_ORGANIZER' | translate)" class="item item-avatar-left item-text-wrap">
+            </div>
+            <div ng-repeat="org in data.event.sponsors" ng-include="'templates/partials/organization.html'"
+                 ng-init="role=('ORGANIZER' | translate)" class="item item-avatar-left item-text-wrap">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class=" margin-horizontal-4">
+      <h2 class="section-title bordered-bottom-dark padding">
+        <div ng-init="showPosts=true" ng-click="showPosts = !showPosts">
+          <span class="section-title">{{'USER_POSTS' | translate}}</span>
+          <span class="section-toggle">
+            <i class="section-toggle icon ion-chevron-down" ng-show="!showPosts"></i>
+            <i class="section-toggle icon ion-chevron-up" ng-show="showPosts"></i>
+          </span>
+        </div>
+      </h2>
+    </div>
+    <a id="feedStart"></a>
+      <!--<div ui-view name="event-feed" ng-show="showPosts" class="expandable"></div>-->
+      <div ng-show="showPosts" class="expandable" ng-include="'templates/partials/feed.html'"></div>
+  </ion-content>
+  <div ng-if="isOnline" class="float-button" ng-click="fs.configurePostEditor(feed)">
+   <span class="height-fix">
+    <a class="content">
+      <i class="ion-plus"></i>
+    </a>
+   </span>
+  </div>
+</ion-view>

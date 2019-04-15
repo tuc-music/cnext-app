@@ -1,0 +1,13 @@
+<ion-popover-view>
+  <ion-content>
+    <ion-list>
+      <ion-radio style="font-size:1em;"
+                 ng-repeat="filter in filterOptions.timeFilters"
+                 ng-click="setFilter(filter,'time')"
+                 ng-model="activeFilters.timeFilter"
+                 ng-value="filter">
+        {{filter.label| translate}}
+      </ion-radio>
+    </ion-list>
+  </ion-content>
+</ion-popover-view>

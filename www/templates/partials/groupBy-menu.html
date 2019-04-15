@@ -1,0 +1,13 @@
+<ion-popover-view>
+  <ion-content>
+    <ion-list>
+      <ion-radio style="font-size:1em;"
+                 ng-model="activeFilters.browseFilter.value"
+                 ng-repeat="filter in filterOptions.browseFilters track by $index"
+                 ng-value="filter.value"
+                 ng-click="setFilter(filter,'browse');">
+        {{filter.label| translate}}
+      </ion-radio>
+    </ion-list>
+  </ion-content>
+</ion-popover-view>

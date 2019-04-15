@@ -1,0 +1,62 @@
+<ion-modal-view class="cnext-modal" name="lbs-msg">
+  <ion-header-bar class="bar bar-header cnext-gradient-bg">
+    <h1 class="title" style="color:white;">{{data.popUpTitle}}</h1>
+  </ion-header-bar>
+  <ion-content scroll="true">
+    <div class="row row-no-padding">
+      <div class="col col-center">
+
+        <div class="card login-container bordered-cnext">
+          <!--Display Quizzes -start -->
+          <div ng-if="data.ntfType.endsWith('quiz')" class="padding-horizontal padding-vertical" style="font-size: 1.2em;">{{data.question}}</div>
+
+          <div ng-if="data.ntfType==='mc-quiz'" class="list bordered-top-purple">
+            <ion-radio style="font-size:1em;"
+                       ng-repeat="option in data.options"
+                       ng-click="setAnswer(option)"
+                       ng-model="data.userAnswer"
+                       ng-value="option"
+                       ng-disabled="data.processed"
+            >
+              {{option}}
+            </ion-radio>
+          </div>
+
+          <div class="list bordered-top-purple" ng-if="data.ntfType==='quiz'">
+            <label class="item item-input">
+              <input type="text" placeholder="your answer here" name="answer"  ng-model="data.userAnswer">
+            </label>
+          </div>
+          <!--Display Quizzes -end -->
+          <!--<div ng-show="data.ntfType!=='quiz'" ng-bind-html="msg"></div>-->
+          <div compile-html="msg" open-external-url></div>
+        </div>
+      </div>
+    </div>
+
+  </ion-content>
+  <ion-footer-bar class="bar bar-footer" style="height: 70px;">
+    <div class="row padding">
+      <!--Display Quizz Buttons-->
+      <div class="col" ng-if="data.ntfType.endsWith('quiz') && !data.processed">
+        <button type="submit" class="button button-cnext float-left" ng-click="closeModal(false)">
+          Cancel
+        </button>
+        <button type="submit" class="button button-cnext float-right" ng-disabled="data.userAnswer===''" ng-click="closeModal(data.userAnswer)">
+          Submit
+        </button>
+      </div>
+
+      <!--Display Confirmation Buttons-->
+      <div class="col" ng-if="data.ntfType==='lbsCnfrm'&& !data.processed">
+        <button class="button button-cnext float-left" ng-if="!data.doNotCancel" ng-click="closeModal(false)">Cancel</button>
+        <button class="button button-cnext float-right" ng-click="closeModal(true)">OK</button>
+      </div>
+
+      <!--Display General Msg Buttons-->
+      <div class="col" ng-if="(data.ntfType!=='lbsCnfrm' && !data.ntfType.endsWith('quiz')) || data.processed">
+        <button class="button button-cnext float-right" ng-click="closeModal(false)">OK</button>
+      </div>
+    </div>
+  </ion-footer-bar>
+</ion-modal-view>

@@ -1,0 +1,26 @@
+<ion-modal-view class="cnext-modal">
+  <ion-header-bar class="bar bar-header cnext-gradient-bg">
+    <h1 class="title" style="color:white;">{{'REPORT_ABUSE' | translate}}</h1>
+  </ion-header-bar>
+  <ion-content>
+    <div class="">
+      <!--Create new Post Form-->
+      <form class="margin-4 margin-vertical-16 cnext-post-card padding" name="reportPostForm">
+        <div class="">
+          <label class="item item-input row-no-padding">
+            <textarea class="highlighted bordered" ng-if="abuseReport.postId" ng-model="abuseReport.explanation" rows="10" name="explain" placeholder="{{'REPORT_POST_PROMPT' | translate}}"></textarea>
+            <textarea class="highlighted bordered" ng-if="abuseReport.commentId" ng-model="abuseReport.explanation" rows="10" name="explain" placeholder="{{'REPORT_COMMENT_PROMPT' | translate}}"></textarea>
+          </label>
+        </div>
+        <div class="row row-no-padding padding-vertical">
+          <div class="col col-33">
+            <button class="button button-small button-cnext float-left" ng-click="closeReportAbuseModal()">{{'CANCEL' | translate}}</button>
+          </div>
+          <div class="col col-67 text-right">
+            <button class="button button-small button-cnext" ng-disabled="abuseReport.explanation.length<10" ng-click="reportAbuse()">{{'SEND' | translate}}</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </ion-content>
+</ion-modal-view>

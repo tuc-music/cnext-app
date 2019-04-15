@@ -1,0 +1,41 @@
+{
+  "project_info": {
+    "project_number": "A VALID PROJECT NUMBER",
+    "firebase_url": "https://cnext-app.firebaseio.com",
+    "project_id": "USE_A_VALID_PROJECT_ID"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "USE_A_VALID_SDK_APP_ID",
+        "android_client_info": {
+          "package_name": "org.tuc.music.cnext"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "USE_A_VALID_ID",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "USE_A_VALID_KEY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

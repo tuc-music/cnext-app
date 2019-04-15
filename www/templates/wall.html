@@ -1,0 +1,20 @@
+<ion-view id="wallViewer" class="wordpress-view" xmlns="http://www.w3.org/1999/html">
+  <ion-nav-title align-title="center">
+    <span class="text-center">{{"WALL" | translate}}</span>
+  </ion-nav-title>
+  <ion-content scroll="true" lazy-scroll>
+    <ion-refresher spinner="lines" on-refresh="doRefresh()"></ion-refresher>
+    <div class="navbar-fixed cnext-bar"></div>
+    <h2 class="section-title bordered-bottom-dark padding-horizontal">
+      {{"LATEST_POSTS" | translate}}
+    </h2>
+    <div ng-include="'templates/partials/feed.html'"></div>
+  </ion-content>
+  <div ng-if="isOnline" class="float-button" ng-click="fs.configurePostEditor(feed)">
+   <span class="height-fix">
+    <a class="content">
+      <i class="ion-plus"></i>
+    </a>
+   </span>
+  </div>
+</ion-view>

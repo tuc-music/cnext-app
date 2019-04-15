@@ -1,0 +1,42 @@
+<ion-view class="login-view">
+  <ion-nav-title align-title="center">
+    <span>{{"LOGIN" | translate}}</span>
+  </ion-nav-title>
+  <ion-content scroll="true">
+    <div class="navbar-fixed cnext-bar"></div>
+    <div class="row">
+      <div class="col col-center">
+        <div class="card login-container bordered-cnext" content-tabs tabsdata='tabsdata'>
+          <div class="item font-larger text-center cnext-gradient-bg">{{"LOGIN" | translate}}</div>
+          <form name="login_form" class="" novalidate ng-cloak>
+            <div class="list">
+              <label class="item item-input">
+                <input type="email" placeholder="Email" name="email" ng-model="userCredentials.email" required>
+              </label>
+              <label class="item item-input" show-hide-container>
+                <input type="password" placeholder="Password" name="password" ng-model="userCredentials.pw" ng-minlength="6" required show-hide-input>
+              </label>
+            </div>
+            <div class="item item-body bottom-content">
+              <button type="submit" class="button button-cnext button-block" ng-click="loginWithCN()" ng-disabled="(login_form.email.$invalid || login_form.password.$invalid)">
+                {{"OK" | translate}}
+              </button>
+            </div>
+          </form>
+        </div>
+        <div class="item alternative-actions margin-vertical-8 padding-vertical bordered-cnext">
+          <button class="button button-block button-cnext" ng-click="loginWithFB()">
+            {{"LOGIN_FB" | translate}}
+          </button>
+          <button class="button button-block button-cnext" ng-click="showSignUpModal()">
+            {{"CREATE_ACCOUNT" | translate}}
+          </button>
+          <button class="button button-block button-cnext" ng-click="doRedirect(false)">
+            {{"CANCEL" | translate}}
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </ion-content>
+</ion-view>

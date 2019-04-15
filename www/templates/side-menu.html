@@ -1,0 +1,65 @@
+<ion-side-menus enable-menu-with-back-views="false">
+  <ion-side-menu-content class="post-size-14px">
+    <ion-nav-bar class="bar app-top-bar" align-title="center">
+      <ion-nav-back-button></ion-nav-back-button>
+      <ion-nav-buttons side="left">
+        <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
+        </button>
+      </ion-nav-buttons>
+      <ion-nav-buttons side="right">
+        <img src="img/cn.svg" class="button button-small button-clear"  ng-click="goHome()">
+      </ion-nav-buttons>
+    </ion-nav-bar>
+    <ion-nav-view name="mainApplication"></ion-nav-view>
+  </ion-side-menu-content>
+  <!--<ion-side-menu side="left" class="main-menu" expose-aside-when="large">-->
+  <ion-side-menu side="left" data-ng-hide="left" class="main-menu">
+    <ion-content>
+      <ion-list>
+        <ion-item ng-if="isUserLoggedIn" class="heading-item item item-avatar" menu-close ui-sref="app.profile">
+          <!--<img user-img="" src="" issuer="{{user.issuer}}" social-id="{{user.socialId}}">-->
+          <img ng-src="{{imgUrl(user.socialId,user.issuer)}}">
+          <span class="greeting item-text-wrap">{{user.firstName}}</span><br/><span class="greeting item-text-wrap">{{user.lastName }}</span>
+        </ion-item>
+        <ion-item class="item-icon-left" menu-close ui-sref="app.notifications">
+          <i class="icon ion-ios-bell"></i>
+          <h2 class="menu-text">{{"NOTIFICATIONS" | translate}}</h2>
+        </ion-item>
+        <ion-item class="item-icon-left" menu-close ui-sref="app.terms">
+          <i class="icon ion-document"></i>
+          <h2 class="menu-text">{{"TERMS_OF_SERVICE" | translate}}</h2>
+        </ion-item>
+        <ion-item class="item-icon-left" menu-close ui-sref="app.policies">
+          <i class="icon ion-ios-locked-outline"></i>
+          <h2 class="menu-text">{{"PRIVACY_POLICY" | translate}}</h2>
+        </ion-item>
+        <ion-item class="item-icon-left" menu-toggle="left" ui-sref="app.game-status" ui-sref-opts="{reload: true, notify: true}">
+        <i class="icon ion-ios-play-outline"></i>
+        <h2 class="menu-text">Gaming</h2>
+        </ion-item>
+        <ion-item class="item-icon-left" menu-close ui-sref="app.about"">
+          <i class="icon ion-ios-information-outline"></i>
+          <h2 class="menu-text">{{"ABOUT" | translate}}</h2>
+        </ion-item>
+        <ion-item class="item-icon-left" menu-close ng-click="SocialService.invite2cnext()">
+          <a class="item-content" href="">
+            <i class="icon ion-android-share-alt"></i>
+            <h2 class="menu-text">{{"INVITE_TO_CNEXT" | translate}}</h2>
+          </a>
+        </ion-item>
+        <ion-item class="item-icon-left" menu-close ng-if="!isUserLoggedIn" ng-click="showLogin({state:'app.home', params:{}})">
+          <a class="item-content" href="">
+            <i class="icon ion-log-in"></i>
+            <h2 class="menu-text">{{"LOGIN" | translate}}</h2>
+          </a>
+        </ion-item>
+        <ion-item class="item-icon-left" menu-close ng-if="isUserLoggedIn" ng-click="logoutUser()">
+          <a class="item-content" href="">
+            <i class="icon ion-log-out"></i>
+            <h2 class="menu-text">{{"LOGOUT" | translate}}</h2>
+          </a>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-side-menu>
+</ion-side-menus>

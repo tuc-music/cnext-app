@@ -1,0 +1,7 @@
+<p>
+  <span ng-bind-html="text"></span>
+  <span data-ng-show='truncated'>...</span>
+  <span data-ng-hide='truncated' ng-bind-html="expandedText"></span>
+  <a href='' data-ng-show='truncated' data-ng-click='truncated=false'>{{showMoreString}}</a>
+  <a href='' data-ng-hide='truncated || disabled' data-ng-click='truncated=true'>{{showLessString}}</a>
+</p>

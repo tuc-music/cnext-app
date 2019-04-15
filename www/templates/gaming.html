@@ -1,0 +1,30 @@
+<ion-view class="maps-view">
+  <ion-nav-title align-title="center">
+    <span class="text-center padding-horizontal-4">{{currentGame.id===1? "cNext Gaming" : currentGame.name}}</span>
+  </ion-nav-title>
+  <ion-content scroll="false">
+    <div class="navbar-fixed cnext-bar row" style="padding:0; height: 40px;">
+      <!--<div class="col col-25 text-center">
+        <button ng-disabled="games.length===0" ng-click="gameFilterMenu.show($event)" class="button button-cnext button-small">
+          <i class="ion-android-apps"></i>
+        </button>
+      </div>-->
+      <div class="col col-33 text-left">
+        <button ng-disabled="currentGame.id===0" ng-click="gameInfoWindow.show($event)" class="button button-cnext button-small" style="margin:0px;">
+          <ion-icon class="icon ion-ios-list-outline"></ion-icon>  Status
+        </button>
+      </div>
+      <div class="col col-33 text-center">
+        <button ng-click="applyLbs()" class="button button-cnext button-small" style="margin:0px;">
+          <ion-icon class="icon" ng-class="{'ion-stop':lbsSettings.allow,'ion-play':!lbsSettings.allow}"></ion-icon>  {{lbsSettings.allow? 'Stop': 'Play'}}
+        </button>
+      </div>
+      <div class="col col-33 text-right">
+        <button ng-click="showHelp()" class="button button-cnext button-small" style="margin:0px;">
+          <ion-icon class="icon ion-ios-information-outline"></ion-icon>  Help
+        </button>
+      </div>
+    </div>
+    <div id="game-map" data-tap-disabled="true"></div>
+  </ion-content>
+</ion-view>

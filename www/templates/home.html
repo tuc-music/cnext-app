@@ -1,0 +1,61 @@
+  <ion-view class="feeds-categories-view">
+    <!--<ion-nav-bar class="bar bar-header" align-title="center">-->
+      <ion-nav-buttons side="left">
+        <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+      </ion-nav-buttons>
+      <ion-nav-title title-al>
+        Caravan Next
+      </ion-nav-title>
+  <ion-content scroll="true">
+    <ion-refresher spinner="lines" on-refresh="doRefresh()">
+    </ion-refresher>
+    <div class="navbar-fixed cnext-bar">
+      <button class="button button-small button-clear float-right" style="padding-top: 3px;" ng-click="reminders.show=!reminders.show"  ng-if="reminders.data.length>0">
+        <span class="badge badge-positive">{{reminders.data.length}}</span>
+      </button>
+    </div>
+      <a ng-if="reminders.show" ng-repeat="reminder in reminders.data track by $index" class="animate-repeat item margin-4 item-text-wrap item-icon-right" href="#">
+        <div class="padding-vertical text-wrap font-small" style="min-height: 40px;"  ng-click="resolveReminder($index,$event,reminder.evtId)" ng-bind-html="reminder.msg"></div>
+        <i class="icon ion-ios-close-outline" style="height: auto; top:3px; right:3px;" ng-click="dismissReminder($index,$event)"></i>
+      </a>
+
+    <div class="row row-center">
+      <div class="col">
+        <div class="row categories-list">
+          <div class="col col-50">
+            <a class="feed-category" ui-sref="app.browse-events">
+              <img class="category-image" src="img/events.svg">
+              <div class="category-title">{{"EVENTS" | translate }}</div>
+            </a>
+          </div>
+          <div class="col row col-50">
+            <a class="feed-category" ui-sref="app.wall">
+              <!--<i class="icon option-icon ion-ios-chatboxes-outline"></i>-->
+              <img class="category-image" src="img/posts.svg">
+              <div class="category-title">{{"WALL" | translate }}</div>
+            </a>
+          </div>
+          <div class="col col-50">
+            <a class="feed-category" ui-sref="app.places">
+              <!--<i class="icon option-icon ion-ios-location-outline"></i>-->
+              <img class="category-image" src="img/places.svg">
+              <div class="category-title">{{"PLACES" | translate }}</div>
+            </a>
+          </div>
+          <div class="col col-50">
+            <a class="feed-category" ui-sref="app.settings">
+              <!--<i class="option-icon icon ion-ios-settings"></i>-->
+              <img class="category-image" src="img/settings.svg">
+              <div class="category-title">{{"SETTINGS" | translate }}</div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--<button class="button button-block button-assertive" ng-click="testQuiz()">Test Quiz</button>-->
+   <div ng-if="lbsTesting">
+     <button ng-show="lbsTesting" class="button button-block button-assertive" ng-click="clearLogs()">Clear Logs</button>
+     <div ng-show="lbsTesting" class="stable-bg" id="appLogs"></div>
+   </div>
+  </ion-content>
+</ion-view>
