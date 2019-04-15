@@ -1,6 +1,7 @@
 
 # cNext Mobile Application
-<img src="resources/icon.v4.png" width="400px">
+<img src="resources/splash.v4.png" width="600px"/>
+
 cNext App is the mobile application developed in the context of the [CaravanNext](http://www.caravanext.eu) EU project. 
 ## About the App
 The cNext app allows end users to participate to the Caravan Next community. The idea behind the app is to develop the interaction between Digital Technologies and SCT (Social Community Theatre) methodology, to facilitate an audience development process and to allow for higher interaction and active participation of the European audience in cultural activities, including the audience that is not used to theatre but uses technology on daily bases. 
