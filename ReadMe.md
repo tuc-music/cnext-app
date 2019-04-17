@@ -4,7 +4,7 @@
 
 cNext App is the mobile application developed in the context of the [CaravanNext](http://www.caravanext.eu) EU project. 
 ## About the App
-The cNext app allows end users to participate to the Caravan Next community. The idea behind the app is to develop the interaction between Digital Technologies and SCT (Social Community Theatre) methodology, to facilitate an audience development process and to allow for higher interaction and active participation of the European audience in cultural activities, including the audience that is not used to theatre but uses technology on daily bases. 
+The cNext app allows end users to participate to the Caravan Next community. The idea behind the app is to develop the interaction between Digital Technologies and SCT (Social Community Theatre) methodology, to facilitate an audience development process and to allow for higher interaction and active participation of the European audience in cultural activities, including the audience that is not used to theatre but uses technology on a daily basis. 
 
 The App allows end users:
 -   To find the events organized in the context of Caravan Next project
@@ -28,14 +28,14 @@ The cNextApp source code is provided under [GPL v3](https://choosealicense.com/l
 The cNext app depends on:
 * The CaravanNext Rest API (https://cnext.tuc.gr/api/) to store and load information about users, events, places, posts, comments, games, etc.
 * The Google Maps API to show events, locations, and users on the map
-* The Google Firebase Cloud Messaging and Apple  Push Notification Service to receive push notifications
-* The Facebook API to allow user registration/authendications of FB users as well as sharing content to Facebook user feed
+* The Google Firebase Cloud Messaging and Apple  Push Notification Services to receive push notifications
+* The Facebook API to allow user registration/authendication of FB users as well as sharing content to Facebook user feed
 
 ### Building the source 
 * Install `nodeJs` and `npm` if you don't have them.
 * Install cordova globally: `npm install -g cordova`
 * Install the ionic globally: `npm install -g ionic`
-* Clone this repository: `git clone https://github.com/ngioldasis/cnext-app.git`
+* Clone this repository: `git clone https://github.com/tuc-music/cnext-app.git`
 * Run `bower install` from the project root to install dependencies declared in bower.json file.
 * Run `npm install` from the project root to install dependencies declared in package.json file.
 
